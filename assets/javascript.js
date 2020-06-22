@@ -1,8 +1,10 @@
 var quizDiv = document.getElementById('quiz');
 var resultsDiv = document.getElementById('results')
+var submitButton = document.getElementById('submit')
+var timerEl = document.getElementById('countdown')
 
-var questionArray = [{
-    q: "Who won the NFL MVP in 2019?",
+var myQuestions = [{
+    question: "Who won the NFL MVP in 2019?",
     answers: {
         a: "Dak Prescott",
         b: "Lamar Jackson",
@@ -12,7 +14,7 @@ var questionArray = [{
     correctAnswer: "b"
 },
 {
-    q: "Who won the Heisman Trophy in 2019",
+    question: "Who won the Heisman Trophy in 2019",
     answers: {
         a: "Kyler Murray",
         b: "Justin Herbert",
@@ -22,7 +24,7 @@ var questionArray = [{
     correctAnswer: "c"
 },
 {
-    q: "Who won the most recent Super Bowl?",
+    question: "Who won the most recent Super Bowl?",
     answers: {
         a: "San Francisco 49ers",
         b: "Kansas City Chiefs",
@@ -32,7 +34,7 @@ var questionArray = [{
     correctAnswer: "b"
 },
 {
-    q: "Who won the college football national championship?",
+    question: "Who won the college football national championship?",
     answers: {
         a: "Alabama",
         b: "Clemson",
@@ -76,12 +78,11 @@ function buildQuiz(){
       }
     );
   
-    // finally combine our output list into one string of HTML and put it on the page
-    quizContainer.innerHTML = output.join('');
+    quizDiv.innerHTML = output.join('');
   }
 
 function showResults() {
-    const answerContainers = quizContainer.querySelectorAll('.answers');
+    const answerContainers = quizDiv.querySelectorAll('.answers');
     let numCorrect = 0;
     myQuestions.forEach ((currentQuestion, questionNumber) =>{
         const answerContainer = answerContainers[questionNumber];
@@ -90,7 +91,7 @@ function showResults() {
         
         if(userAnswer ===currentQuestion.correctAnswer){
             numCorrect++;
-            answerContainers[questionNumber].style.color = 'lightgreen'
+            answerContainers[questionNumber].style.color = 'green'
         }
         else {
             answerContainers[questionNumber].style.color = 'red';
@@ -99,9 +100,25 @@ function showResults() {
     resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
 }
 
-const answerContainers = quizContainer.querySelectorAll('.answers');
+function countdown() {
+    var timeLeft = 25;
+  
+    // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
+    var timeInterval = setInterval(function() {
+      timeLeft = timeLeft-1
+      timerEl.textContent= timeLeft+ " seconds remaining."
+      if (timeLeft <= 0) {
+        clearInterval(timeInterval)
+        displayMessage()
+      }
+    },1000);
+  }
+
+
 
 let numCorrect = 0;
+submitButton.addEventListener('click', showResults);
 
+countdown();
 buildQuiz();
 showResults();
