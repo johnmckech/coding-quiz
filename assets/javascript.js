@@ -2,6 +2,8 @@ var quizDiv = document.getElementById('quiz');
 var resultsDiv = document.getElementById('results')
 var submitButton = document.getElementById('submit')
 var timerEl = document.getElementById('countdown')
+var btn = window.document.querySelector("button");
+console.dir(btn);
 
 var myQuestions = [{
     question: "Who won the NFL MVP in 2019?",
@@ -109,7 +111,7 @@ function countdown() {
       timerEl.textContent= timeLeft+ " seconds remaining."
       if (timeLeft <= 0) {
         clearInterval(timeInterval)
-        displayMessage()
+        displayMessage(" quiz complete")
       }
     },1000);
   }
